@@ -1,0 +1,27 @@
+{
+  "name": "@simonwong/mcp-servers",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Model Context Protocol servers",
+  "keywords": [
+    "MCP"
+  ],
+  "license": "MIT",
+  "author": "Simon <wsj_simon@163.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonwong/mcp-servers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/simonwong/mcp-servers/issues"
+  },
+  "homepage": "https://github.com/simonwong/mcp-servers#readme",
+  "type": "module",
+  "workspaces": [
+    "src/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {}
+}
