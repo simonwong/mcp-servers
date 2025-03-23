@@ -8,6 +8,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
+import { parseArgs } from 'node:util';
 import {
   CreateOrUpdateFileSchema,
   SearchRepositoriesSchema,
@@ -34,6 +35,13 @@ import {
   createMergeRequest,
 } from './gitlab-api.js';
 
+const { values } = parseArgs({
+  options: {
+    readonly: { type: 'boolean', default: false }
+  }
+});
+const isReadOnly = values.readonly;
+
 const server = new Server({
   name: "gitlab-mcp-server",
   version: "0.0.1",
@@ -44,59 +52,67 @@ const server = new Server({
 });
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
+  const readonlyTools = [
+    "search_repositories",
+    "get_repository_tree",
+    "get_file_contents",
+  ]
+
+  const tools = [
+    {
+      name: "create_or_update_file",
+      description: "Create or update a single file in a GitLab project",
+      inputSchema: zodToJsonSchema(CreateOrUpdateFileSchema)
+    },
+    {
+      name: "search_repositories",
+      description: "Search for GitLab projects",
+      inputSchema: zodToJsonSchema(SearchRepositoriesSchema)
+    },
+    {
+      name: "create_repository",
+      description: "Create a new GitLab project",
+      inputSchema: zodToJsonSchema(CreateRepositorySchema)
+    },
+    {
+      name: "get_file_contents",
+      description: "Get the contents of a file or directory from a GitLab project",
+      inputSchema: zodToJsonSchema(GetFileContentsSchema)
+    },
+    {
+      name: "get_repository_tree",
+      description: "Get the directory tree of a GitLab project",
+      inputSchema: zodToJsonSchema(GetRepositoryTreeSchema)
+    },
+    {
+      name: "push_files",
+      description: "Push multiple files to a GitLab project in a single commit",
+      inputSchema: zodToJsonSchema(PushFilesSchema)
+    },
+    {
+      name: "create_issue",
+      description: "Create a new issue in a GitLab project",
+      inputSchema: zodToJsonSchema(CreateIssueSchema)
+    },
+    {
+      name: "create_merge_request",
+      description: "Create a new merge request in a GitLab project",
+      inputSchema: zodToJsonSchema(CreateMergeRequestSchema)
+    },
+    {
+      name: "fork_repository",
+      description: "Fork a GitLab project to your account or specified namespace",
+      inputSchema: zodToJsonSchema(ForkRepositorySchema)
+    },
+    {
+      name: "create_branch",
+      description: "Create a new branch in a GitLab project",
+      inputSchema: zodToJsonSchema(CreateBranchSchema)
+    }
+  ]
+
   return {
-    tools: [
-      {
-        name: "create_or_update_file",
-        description: "Create or update a single file in a GitLab project",
-        inputSchema: zodToJsonSchema(CreateOrUpdateFileSchema)
-      },
-      {
-        name: "search_repositories",
-        description: "Search for GitLab projects",
-        inputSchema: zodToJsonSchema(SearchRepositoriesSchema)
-      },
-      {
-        name: "create_repository",
-        description: "Create a new GitLab project",
-        inputSchema: zodToJsonSchema(CreateRepositorySchema)
-      },
-      {
-        name: "get_file_contents",
-        description: "Get the contents of a file or directory from a GitLab project",
-        inputSchema: zodToJsonSchema(GetFileContentsSchema)
-      },
-      {
-        name: "get_repository_tree",
-        description: "Get the directory tree of a GitLab project",
-        inputSchema: zodToJsonSchema(GetRepositoryTreeSchema)
-      },
-      {
-        name: "push_files",
-        description: "Push multiple files to a GitLab project in a single commit",
-        inputSchema: zodToJsonSchema(PushFilesSchema)
-      },
-      {
-        name: "create_issue",
-        description: "Create a new issue in a GitLab project",
-        inputSchema: zodToJsonSchema(CreateIssueSchema)
-      },
-      {
-        name: "create_merge_request",
-        description: "Create a new merge request in a GitLab project",
-        inputSchema: zodToJsonSchema(CreateMergeRequestSchema)
-      },
-      {
-        name: "fork_repository",
-        description: "Fork a GitLab project to your account or specified namespace",
-        inputSchema: zodToJsonSchema(ForkRepositorySchema)
-      },
-      {
-        name: "create_branch",
-        description: "Create a new branch in a GitLab project",
-        inputSchema: zodToJsonSchema(CreateBranchSchema)
-      }
-    ]
+    tools: isReadOnly ? tools.filter(t => readonlyTools.includes(t.name)) : tools
   };
 });
 
