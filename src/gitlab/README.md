@@ -4,13 +4,12 @@ MCP Server for the GitLab API, enabling project management, file operations, and
 
 Development based on [modelcontextprotocol gitlab](https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab)
 
-### Features
+## Features
 
 - **Automatic Branch Creation**: When creating/updating files or pushing changes, branches are automatically created if they don't exist
 - **Comprehensive Error Handling**: Clear error messages for common issues
 - **Git History Preservation**: Operations maintain proper Git history without force pushing
 - **Batch Operations**: Support for both single-file and multi-file operations
-
 
 ## Tools
 
@@ -108,6 +107,7 @@ Development based on [modelcontextprotocol gitlab](https://github.com/modelconte
 ## Setup
 
 ### Personal Access Token
+
 [Create a GitLab Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with appropriate permissions:
    - Go to User Settings > Access Tokens in GitLab
    - Select the required scopes:
@@ -117,6 +117,7 @@ Development based on [modelcontextprotocol gitlab](https://github.com/modelconte
    - Create the token and save it securely
 
 ### Usage with Claude Desktop
+
 Add the following to your `claude_desktop_config.json`:
 
 ### NPX
