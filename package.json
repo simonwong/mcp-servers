@@ -1,7 +1,6 @@
 {
   "name": "@simonwong/mcp-servers",
   "private": true,
-  "version": "0.0.0",
   "description": "Model Context Protocol servers",
   "keywords": [
     "MCP"
@@ -16,8 +15,8 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces",
-    "version": "changeset version",
-    "release": "changeset publish"
+    "ci:version": "changeset version",
+    "ci:publish": "npm run build --workspaces &&changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1"
