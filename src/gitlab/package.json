@@ -6,6 +6,9 @@
   "author": "Simon <wsj_simon@163.com>",
   "bugs": "https://github.com/simonwong/mcp-servers/issues",
   "homepage": "https://github.com/simonwong/mcp-servers#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "mcp-server-gitlab": "dist/index.js"
