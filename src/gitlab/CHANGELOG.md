@@ -1,5 +1,11 @@
 # @simonwong/mcp-gitlab-server
 
+## 0.0.2
+
+### Patch Changes
+
+- f1e7f89: Add a `--readonly` parameter to control tools that only provide read operations.
+
 ## 0.0.1
 
 ### Patch Changes
