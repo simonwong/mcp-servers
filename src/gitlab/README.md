@@ -13,6 +13,8 @@ Development based on [modelcontextprotocol gitlab](https://github.com/modelconte
 
 ## Tools
 
+In readonly, the following tools are available: `search_repositories`, `get_repository_tree`, `get_file_contents`.
+
 1. `create_or_update_file`
    - Create or update a single file in a project
    - Inputs:
@@ -130,6 +132,27 @@ Add the following to your `claude_desktop_config.json`:
       "args": [
         "-y",
         "@simonwong/mcp-gitlab-server"
+      ],
+      "env": {
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>",
+        "GITLAB_API_URL": "https://gitlab.com/api/v4" // Optional, for self-hosted instances
+      }
+    }
+  }
+}
+```
+
+You can add a `--readonly` parameter to control tools that only provide read operations, to prevent AI from making unintended modifications to the repository.
+
+```json
+{
+  "mcpServers": {
+    "gitlab": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@simonwong/mcp-gitlab-server",
+        "--readonly"
       ],
       "env": {
         "GITLAB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>",
