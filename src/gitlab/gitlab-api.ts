@@ -99,7 +99,7 @@ export async function getDefaultBranchRef(projectId: string): Promise<string> {
 export async function getFileContents(
   projectId: string,
   filePath: string,
-  ref?: string
+  ref: string = "HEAD"
 ): Promise<GitLabContent> {
   const encodedPath = encodeURIComponent(filePath);
   let url = `${GITLAB_API_URL}/projects/${encodeURIComponent(projectId)}/repository/files/${encodedPath}`;

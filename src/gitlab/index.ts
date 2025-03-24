@@ -44,7 +44,7 @@ const isReadOnly = values.readonly;
 
 const server = new Server({
   name: "gitlab-mcp-server",
-  version: "0.0.1",
+  version: "0.0.3",
 }, {
   capabilities: {
     tools: {}
